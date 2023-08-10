@@ -14,10 +14,25 @@ public class ClienteDAO {
         PreparedStatement ps = null;
 
         try {
-
             ps = conn.getConnection().prepareStatement(sql);
             ps.setString(1, dados.getNome());
             ps.setString(2, dados.getCpf());
+
+           /* int op = 0;
+            while (op != 2) {
+
+                if (cpf.length() == 11) {
+                    op = 2;
+                    try {
+                        num = Long.parseLong(cpf);
+                        System.out.println("CPF valido!");
+                    } catch (Exception e) {
+                        System.out.println("Informe um CPF válido!");
+                        cpf = JOptionPane.showInputDialog("Informe o CPF:");
+                        op = 1;
+                    }
+                }
+            }*/
             ps.setString(3, dados.getEmail());
             ps.setString(4, dados.getCell());
             ps.setString(5, dados.getSenha_acesso());
@@ -102,7 +117,7 @@ public class ClienteDAO {
         }
     }
 
-    public void FindByAndUpdate(String cell, String senha_acesso, int qualquercoisa) {
+    public void FindByAndUpdate(String cell, String senha_acesso, int Id) {
 
         String sql = "UPDATE CADASTRO_CLIENTE SET CELL = ?, SENHA_ACESSO = ? WHERE id_cliente = ?";
         PreparedStatement ps = null;
@@ -111,12 +126,12 @@ public class ClienteDAO {
             ps = conn.getConnection().prepareStatement(sql);
             ps.setString(1, cell);
             ps.setString(2, senha_acesso);
-            ps.setInt(3, qualquercoisa);
+            ps.setInt(3, Id);
             ps.execute();
             ps.close();
             System.out.println("Conta atualizada.");
 
-        } catch (Exception e) {   
+        } catch (Exception e) {
             System.out.println(e);
             System.out.println("Conta não atualizada.");
 

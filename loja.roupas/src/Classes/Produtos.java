@@ -1,6 +1,8 @@
 package Classes;
 
+import DAO.ClienteDAO;
 import DAO.ProdutosDAO;
+import java.util.ArrayList;
 public class Produtos {
 
     private int id_produto;
@@ -57,10 +59,23 @@ public class Produtos {
     public void setValor(double valor) {
         this.valor = valor;
     }
-    public void produtosRoupas(Produtos roupas){
+    public void produtosRoupas(Produtos roupas,int id_produtos){
         
-        new ProdutosDAO().produtosRoupas(roupas);
+        new ProdutosDAO().produtosRoupas(roupas, id_produtos);
     }
-    
+      public ArrayList<Produtos> find() {
+
+        ArrayList<Produtos> lojas = new ArrayList<>();
+        lojas = new ProdutosDAO().find();
+        return lojas;
+    }
+        public void removeProduto(int id_produtos) {
+        
+        new ProdutosDAO().removeProduto(id_produtos);
+    }
+     public void updateProduto(int quantidade,double valor, int id_produtos) {
+        
+        new ProdutosDAO().updateProduto(quantidade, valor, id_produtos);
+    }
     
 }

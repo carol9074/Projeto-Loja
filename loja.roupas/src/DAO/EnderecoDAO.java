@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class EnderecoDAO {
 
-    public void enderecoGeral(Endereco geral) {
-        String sql = "INSERT INTO ENDERECO (RUA,NUMERO,BAIRRO,CIDADE,UF(?,?,?,?,?)";
+    public void enderecoGeral(Endereco geral, int idcliente) {
+        String sql = "INSERT INTO ENDERECO (RUA,NUMERO,BAIRRO,CIDADE,UF,CADASTRO_CLIENTE_ID_CLIENTE) VALUES (?,?,?,?,?,?)";
 
         PreparedStatement ps = null;
 
@@ -21,10 +21,12 @@ public class EnderecoDAO {
             ps.setString(3, geral.getBairro());
             ps.setString(4, geral.getCidade());
             ps.setString(5, geral.getUF());
+            ps.setInt(6, idcliente);
             ps.execute();
             ps.close();
             System.out.println("Endereço cadastrado.");
         } catch (Exception e) {
+            System.out.println(e);
             System.out.println("Endereço não cadastrado.");
         }
     }
@@ -49,7 +51,7 @@ public class EnderecoDAO {
                 geral.setBairro(rs.getString("bairro"));
                 geral.setCidade(rs.getString("cidade"));
                 geral.setUF(rs.getString("UF"));
-               lista.add(geral);
+                lista.add(geral);
             }
 
         } catch (Exception e) {
@@ -57,5 +59,47 @@ public class EnderecoDAO {
             return null;
         }
         return lista;
+    }   
+       
+    public void removeEndereco(int id_endereco) {
+
+        String sql = "DELETE FROM ENDERECO WHERE  ID_ENDERECO = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = conn.getConnection().prepareStatement(sql);
+            ps.setInt(1, id_endereco);
+            ps.execute();
+            ps.close();
+            System.out.println("Endereço deletada.");
+
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Endereço não deletada.");
+        }
+    }
+    public void updateEndereco(String rua, String bairro,String cidade,String UF,int num, int id_endereco) {
+
+        String sql = "UPDATE ENDERECO SET RUA = ?, NUMERO = ?, BAIRRO = ?, CIDADE = ?, UF = ? WHERE id_endereco = ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = conn.getConnection().prepareStatement(sql);
+            ps.setString(1,rua );
+            ps.setInt(2,num );
+            ps.setString(3,bairro );
+            ps.setString(4,cidade );
+            ps.setString(5,UF );
+            ps.setInt(6, id_endereco);
+            ps.execute();
+            ps.close();
+            System.out.println("Endereço atualizado.");
+            System.out.println(rua);
+
+        } catch (Exception e) {   
+            System.out.println(e);
+            System.out.println("Endereço não atualizada.");
+
+        }
     }
 }

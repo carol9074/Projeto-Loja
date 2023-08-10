@@ -1,7 +1,9 @@
 package Classes;
 
+import DAO.ClienteDAO;
 import java.util.ArrayList;
 import DAO.EnderecoDAO;
+
 public class Endereco {
 
     private int id_endereco;
@@ -58,15 +60,26 @@ public class Endereco {
     public void setUF(String UF) {
         this.UF = UF;
     }
-    public void enderecoGeral(Endereco geral){
-        
-        new EnderecoDAO().enderecoGeral(geral);
-    }
-    public ArrayList<Endereco> find(){
-        
-        ArrayList<Endereco> lista = new ArrayList<>();
-        lista = new EnderecoDAO().find();
-       return lista;
+
+    public void enderecoGeral(Endereco geral, int idcliente) {
+
+        new EnderecoDAO().enderecoGeral(geral, idcliente);
     }
 
+    public ArrayList<Endereco> find() {
+
+        ArrayList<Endereco> lista = new ArrayList<>();
+        lista = new EnderecoDAO().find();
+        return lista;
+    }
+
+    public void removeEndereco(int id_endereco) {
+
+        new EnderecoDAO().removeEndereco(id_endereco);
+    }
+
+    public void updateEndereco(String rua, String bairro,String cidade,String UF,int num, int id_endereco) {
+
+        new EnderecoDAO().updateEndereco(rua, bairro, cidade, UF, num, id_endereco);
+    }
 }
